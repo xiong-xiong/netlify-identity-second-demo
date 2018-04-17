@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import netlifyIdentity from "netlify-identity-widget"
 
 class SlackMessage extends Component {
     constructor(props) {
