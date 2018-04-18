@@ -6,18 +6,17 @@ export function handler(event, context, callback) {
     const claims = context.clientContext && context.clientContext.user;
     const role = claims.app_metadata.roles[0]
   
-
-    if (role !== "mainuser") {
-        return callback(null, { statusCode: 401, body: "Your user level is too low to send me messages" });
-      }
-
     if (!claims) {
       return callback(null, { statusCode: 401, body: "You must be signed in to call this function" });
     }
 
-  if (event.httpMethod !== "POST") {
+    if (claims && role !== "mainuser") {
+        return callback(null, { statusCode: 401, body: "Your user level is too low to send me messages" });
+    }
+
+    if (event.httpMethod !== "POST") {
     return callback(null, { statusCode: 410, body: "Unsupported Request Method" });
-  }
+    }
   try {
     const payload = JSON.parse(event.body);
     fetch(slackURL, {
