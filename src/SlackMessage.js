@@ -39,7 +39,7 @@ class SlackMessage extends Component {
             
           }
         })
-        .then(() => this.setState({loading: false, text: null, success: true, error: null}))
+        .then(() => this.setState({loading: false, text: "", success: true, error: null}))
         .catch(err => this.setState({loading: false, success: false, error: err.toString()}))
       });
     }
