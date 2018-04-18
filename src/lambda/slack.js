@@ -4,7 +4,13 @@ const slackURL = process.env.SLACK_WEBHOOK_URL;
 export function handler(event, context, callback) {
 
     const claims = context.clientContext && context.clientContext.user;
-    if (!claims) {
+    const role = ""
+    fetchUser(context.clientContext.identity, claims.sub)
+    .then((user) => {
+      role = user.app_metadata.roles[0]
+    })
+
+    if (!claims || role != "mainuser") {
       return callback(null, { statusCode: 401, body: "You must be signed in to call this function" });
     }
   if (event.httpMethod !== "POST") {
