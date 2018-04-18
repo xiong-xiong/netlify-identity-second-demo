@@ -10,13 +10,13 @@ export function handler(event, context, callback) {
       return callback(null, { statusCode: 401, body: "You must be signed in to call this function" });
     }
 
-    if (claims && role !== "mainuser") {
+    else if (claims && role !== "mainuser") {
         return callback(null, { statusCode: 401, body: "Your user level is too low to send me messages" });
     }
 
-    if (event.httpMethod !== "POST") {
+     else if (event.httpMethod !== "POST") {
     return callback(null, { statusCode: 410, body: "Unsupported Request Method" });
-    }
+    } else {
   try {
     const payload = JSON.parse(event.body);
     fetch(slackURL, {
@@ -29,5 +29,5 @@ export function handler(event, context, callback) {
     })
   } catch (e) {
     callback(null, { statusCode: 500, body: "Internal Server Error: " + e });
-  }
+  }}
 }
