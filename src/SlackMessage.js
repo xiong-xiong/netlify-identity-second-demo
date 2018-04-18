@@ -34,7 +34,9 @@ class SlackMessage extends Component {
         })
         .then(response => {
           if (!response.ok) {
+            
             return response.text().then(err => {throw(err)});
+            
           }
         })
         .then(() => this.setState({loading: false, text: null, success: true, error: null}))
