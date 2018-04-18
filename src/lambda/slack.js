@@ -6,7 +6,7 @@ export function handler(event, context, callback) {
     const claims = context.clientContext && context.clientContext.user;
     const role = claims.app_metadata.roles[0]
   
-    if (!claims.app_metadata.roles.length > 0) {
+    if (!claims.app_metadata.roles.length > 0 || claims === undefined) {
       return callback(null, { statusCode: 401, body: "You must be signed in to call this function" });
     }
 
